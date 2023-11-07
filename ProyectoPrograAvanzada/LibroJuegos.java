@@ -36,7 +36,9 @@ public class LibroJuegos {
 
     public void registrarse(){
         Scanner in = new Scanner(System.in);
-        this.getJugadores().add(new Persona(in.nextLine(), in.nextLine()));
+        String nombre = in.nextLine();
+        String contraseña = in.nextLine();
+        this.getJugadores().add(new Persona(nombre, contraseña));
         in.close();
     }
     public void jugar(){
