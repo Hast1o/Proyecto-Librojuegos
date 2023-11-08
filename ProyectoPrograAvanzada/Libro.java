@@ -92,6 +92,10 @@ public class Libro {
         this.getPaginas().add(p);
     }
 
+    public void remuevePagina(int numpag){
+        this.getPaginas().remove(numpag);
+    }
+    
     public void siguientePagina(int numpag){
         this.getPaginas().get(numpag).mostrarDatos(this);
     }
