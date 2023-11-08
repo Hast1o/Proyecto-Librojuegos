@@ -32,11 +32,7 @@ public class Persona {
     }
 
     public void agregaPagina(Libro L){
-        Pagina p;
-        FactoryPagina fabrica;
-        fabrica = new ConcretePaginaFinal();
-        p = fabrica.creaPagina();
-        L.agregaPagina(p);
+        
     }
     public void jugar(LibroJuegos juego){
         juego.jugar();

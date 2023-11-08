@@ -56,6 +56,21 @@ public class LibroJuegos {
     }
 
     public void agregarLibro(){
-        
+        Scanner in = new Scanner(System.in);
+        System.out.println("Ingrese el nombre del libro:\n");
+        String nombre = in.nextLine();
+        System.out.println("Ingrese el autor del libro:\n");
+        String autor = in.nextLine();
+        System.out.println("Ingrese la descripción del libro:\n");
+        String descripcion = in.nextLine();
+        Libro libro = new Libro(autor,nombre,descripcion);
+        System.out.println("Desea agregar una página al libro:");
+        String opcion = in.nextLine();
+        while(opcion.equalsIgnoreCase("si")){
+            libro.agregaPagina();
+            System.out.println("Desea agregar otra página al libro:");
+            opcion = in.nextLine();
+        }
+        this.getLibros().add(libro);
     }
 }

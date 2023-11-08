@@ -35,5 +35,6 @@ public class Opcion {
     }
     public void mostrarDatos(){
         System.out.println(this.getNarrativa());
+        System.out.println(this.getEstado());
     }
 }

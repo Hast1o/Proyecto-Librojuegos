@@ -14,7 +14,6 @@ public abstract class FactoryPagina {
             StringBuilder _descripcion = new StringBuilder(in.nextLine());
             System.out.println("Ingrese el número de la página:\n");
             _numero = in.nextInt();
-            in.close();
             return new ConcretePaginaFinal().creaPagina(_descripcion, _numero);
             
             
@@ -25,7 +24,6 @@ public abstract class FactoryPagina {
             StringBuilder _descripcion = new StringBuilder(in.nextLine());
             System.out.println("Ingrese el número de la página:\n");
             _numero = in.nextInt();
-            in.close();
             return new ConcretePaginaNodo().creaPagina(_descripcion,_numero);
         }
         if(_tipo.equalsIgnoreCase("inicio")){
@@ -34,10 +32,8 @@ public abstract class FactoryPagina {
             StringBuilder _descripcion = new StringBuilder(in.nextLine());
             System.out.println("Ingrese el número de la página:\n");
             _numero = in.nextInt();
-            in.close();
             return new ConcretePaginaInicio().creaPagina(_descripcion,_numero);
         }
-        in.close();
         return null;
         }            
 }

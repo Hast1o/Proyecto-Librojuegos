@@ -90,18 +90,29 @@ public abstract class Pagina {
         Scanner in = new Scanner(System.in);
         if(this.getTipo().equalsIgnoreCase("Nodo")){
             for(int i=0;i<3;i++){
-                this.getOpciones().add(new Opcion(new StringBuilder(in.nextLine()), in.nextInt(),"Sin usar"));
+                System.out.println("Creando Opcion "+(i+1));
+                StringBuilder narrativa = new StringBuilder(in.nextLine());
+                int nuevaDireccion = in.nextInt();
+                in.nextLine();
+                this.getOpciones().add(new Opcion(narrativa,nuevaDireccion,"Sin usar"));
             }
         }
         if(this.getTipo().equalsIgnoreCase("Final")){
-            System.out.println("Creando Opcion final\n");
-            this.getOpciones().add(new Opcion(new StringBuilder(in.nextLine()), in.nextInt(),"Sin usar"));
+            System.out.println("Creando Opcion final");
+            StringBuilder narrativa = new StringBuilder(in.nextLine());
+            int nuevaDireccion = in.nextInt();
+            in.nextLine();
+            this.getOpciones().add(new Opcion(narrativa,nuevaDireccion,"Sin usar"));
         }
         if(this.getTipo().equalsIgnoreCase("Inicio")){
-            System.out.println("Creando opcion que llevará al jugador al inicio\n");
-            this.getOpciones().add(new Opcion(new StringBuilder(in.nextLine()), in.nextInt(),"Sin usar"));
+            System.out.println("Creando opcion que llevará al jugador al inicio");
+            StringBuilder narrativa = new StringBuilder(in.nextLine());
+            int nuevaDireccion = in.nextInt();
+            in.nextLine();
+            this.getOpciones().add(new Opcion(narrativa,nuevaDireccion,"Sin usar"));
         }
     }
+
     protected void escogerOpcion(Opcion o,Libro l){
         this.quemarOpcion(o);
         if(l.getPaginas().get(o.getNuevaDireccion()).tipo=="Nodo"){

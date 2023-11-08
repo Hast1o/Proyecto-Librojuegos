@@ -83,7 +83,12 @@ public class Libro {
             this.paginas.get(i).cambiaNombre(this.getNombreJugador());
         }
     }
-    public void agregaPagina(Pagina p){
+    public void agregaPagina(){
+        Pagina p;
+        FactoryPagina fabrica;
+        fabrica = new ConcretePaginaFinal();
+        p = fabrica.creaPagina();
+        p.creaOpciones();
         this.getPaginas().add(p);
     }
 
