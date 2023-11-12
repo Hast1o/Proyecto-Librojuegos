@@ -299,11 +299,7 @@ public class LibroJuegos implements SujetoObservable {
             this.menuOpciones();
         }
         if (opcion == 2) {
-            if (this.getJugadorActual() == null) {
-                this.iniciarSesion();
-            } else {
-                System.out.println("Ya estas dentro de una sesion");
-            }
+            this.iniciarSesion();
             this.menuOpciones();
         }
         if (opcion == 3) {
