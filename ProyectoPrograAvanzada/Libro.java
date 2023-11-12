@@ -75,14 +75,14 @@ public class Libro {
     }
 
     public void pedirNombre(){
-        Scanner in = new Scanner(System.in);
-        System.out.println("Ingrese su nombre para comenzar su aventura:\n");
-        this.setNombreJugador(in.nextLine());
-        in.close();
+        Scanner entrada3 = new Scanner(System.in);
+        System.out.println("Ingrese su nombre para comenzar su aventura:");
+        this.setNombreJugador(entrada3.nextLine());
         for(int i=0;i<paginas.size();i++){
-            this.paginas.get(i).cambiaNombre(this.getNombreJugador());
+            this.paginas.get(i).cambiaNombre(this.getNombreJugador(),"NOMBREJUGADOR");
         }
     }
+    
     public void agregaPagina(){
         Pagina p;
         FactoryPagina fabrica;
@@ -96,9 +96,26 @@ public class Libro {
         this.getPaginas().remove(numpag);
     }
     
-    public void siguientePagina(int numpag){
-        this.getPaginas().get(numpag).mostrarDatos(this);
-    }
+    public void siguientePagina(int numpag,LibroJuegos juego){
+        if(this.getEstado()!="Terminado"){
+            if(numpag>this.getPaginas().size()){
+                System.out.println("El libro esta incompleto\nvolviendo al menu inicial......");
+                for(int i=0;i<paginas.size();i++){
+                    this.getPaginas().get(i).reestableceOpciones();
+                    this.getPaginas().get(i).cambiaNombre("NOMBREJUGADOR",this.getNombreJugador());
+                }
+                juego.menuOpciones();
+            }else{
+                this.getPaginas().get(numpag).mostrarDatos(this,juego);
+            }
+        }else{
+            for(int i=0;i<paginas.size();i++){
+                this.getPaginas().get(i).reestableceOpciones();
+                this.getPaginas().get(i).cambiaNombre("NOMBREJUGADOR",this.getNombreJugador());
+            }
+            juego.menuOpciones();
+        }
+    }  
 
 
 }
