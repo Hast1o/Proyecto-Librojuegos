@@ -8,6 +8,7 @@ public abstract class Pagina {
     private String tipo;
     private String estado;
     private int numero;
+    private String imagen;
 
     Pagina(){
         this.setDescripcion(new StringBuilder("descripcion"));
