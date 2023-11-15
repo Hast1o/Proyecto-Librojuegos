@@ -70,13 +70,13 @@ public abstract class Pagina {
     protected void cambiaNombre(String _nombreJugador,String _palabra){
         int i = this.getDescripcion().indexOf(_palabra);
         while(i!=-1){
-            this.getDescripcion().replace(i, i+13, _nombreJugador);
+            this.getDescripcion().replace(i, i+_palabra.length(), _nombreJugador);
             i = this.getDescripcion().indexOf(_palabra,i+_nombreJugador.length());
         }
-        for(int n=0;i<opciones.size();i++){
+        for(int n=0;n<opciones.size();n++){
             int j = this.getDescripcion().indexOf(_palabra);
             while(j!=-1){
-                this.opciones.get(n).getNarrativa().replace(j, j+13, _nombreJugador);
+                this.opciones.get(n).getNarrativa().replace(j, j+_palabra.length(), _nombreJugador);
                 j = this.getDescripcion().indexOf(_palabra,i+_nombreJugador.length());
             }
         }
@@ -110,22 +110,6 @@ public abstract class Pagina {
                 }
             } while (this.getOpciones().size()<3);       
         }
-        
-        if(this.getTipo().equalsIgnoreCase("Final")){
-           do {
-                try {
-                    System.out.println("Creando Opcion final");
-                    System.out.println("Ingrese una descripcion");
-                    StringBuilder narrativa = new StringBuilder(entrada14.nextLine());
-                    System.out.println("Ingrese la direccion");
-                    String entrada = entrada14.nextLine();
-                    nuevaDireccion = Integer.parseInt(entrada);
-                    this.getOpciones().add(new Opcion(narrativa,nuevaDireccion,"Sin usar"));
-                } catch (NumberFormatException e) {
-                    System.out.println("Nueva direccion no valida");
-                }
-            } while (this.getOpciones().size()<1);   
-        }
         if(this.getTipo().equalsIgnoreCase("Inicio")){
             do {
                 try {
@@ -145,15 +129,15 @@ public abstract class Pagina {
 
     protected void escogerOpcion(Opcion o,Libro l,LibroJuegos juego){
         this.quemarOpcion(o);
-        if(l.getPaginas().get(o.getNuevaDireccion()).tipo=="Nodo"){
-            l.getPaginas().get(o.getNuevaDireccion()).accion();
+        if(l.getPaginas().get(o.getNuevaDireccion()-1).tipo=="Nodo"){
+            l.getPaginas().get(o.getNuevaDireccion()-1).accion();
         }
-        if(l.getPaginas().get(o.getNuevaDireccion()).tipo=="Inicio"){
-            l.getPaginas().get(o.getNuevaDireccion()).accion();
+        if(l.getPaginas().get(o.getNuevaDireccion()-1).tipo=="Inicio"){
+            l.getPaginas().get(o.getNuevaDireccion()-1).accion();
         }
-        if(l.getPaginas().get(o.getNuevaDireccion()).tipo=="Final"){
-            l.getPaginas().get(o.getNuevaDireccion()).accion();
+        if(l.getPaginas().get(o.getNuevaDireccion()-1).tipo=="Final"){
             l.setEstado("Terminado");
+            System.out.println(l.getPaginas().get(o.getNuevaDireccion()-1).getDescripcion());
             System.out.println("Volviendo al menú principal.......");
             l.siguientePagina(o.getNuevaDireccion(),juego);
         }
@@ -165,15 +149,23 @@ public abstract class Pagina {
         System.out.println(this.getDescripcion());
         System.out.println("Estas son las opciones");
         for(int i=0;i<this.getOpciones().size();i++){
+            System.out.println("Opcion "+(i+1));
             this.getOpciones().get(i).mostrarDatos();
         }
         Scanner in = new Scanner(System.in);
-        int opcion = in.nextInt();
-        while(this.getOpciones().get(opcion).getEstado()=="Utilizada"){
-            System.out.println("Esta opción no está disponible, escoga otra:");
-            opcion = in.nextInt();   
-        }
-        in.close();
-        this.escogerOpcion(this.getOpciones().get(opcion),L,juego);
-        }   
+        int opcion = 0;
+        do {
+            try {
+                System.out.println("Que opcion tomarás");
+                String entrada = in.nextLine();
+                opcion = Integer.parseInt(entrada);
+                }catch (NumberFormatException e){ 
+                }
+                if(opcion<=0||opcion>3){
+                    System.out.println("Opcion invalida");
+                }
+        }while(opcion<=0||opcion>3||this.getOpciones().get(opcion-1).getEstado()=="Utilizada");      
+        this.escogerOpcion(this.getOpciones().get(opcion-1),L,juego);
+    }
+          
 }

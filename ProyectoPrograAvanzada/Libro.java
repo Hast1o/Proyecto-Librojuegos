@@ -98,7 +98,7 @@ public class Libro {
     
     public void siguientePagina(int numpag,LibroJuegos juego){
         if(this.getEstado()!="Terminado"){
-            if(numpag>this.getPaginas().size()){
+            if(numpag-1>this.getPaginas().size()){
                 System.out.println("El libro esta incompleto\nvolviendo al menu inicial......");
                 for(int i=0;i<paginas.size();i++){
                     this.getPaginas().get(i).reestableceOpciones();
@@ -106,7 +106,12 @@ public class Libro {
                 }
                 juego.menuOpciones();
             }else{
-                this.getPaginas().get(numpag).mostrarDatos(this,juego);
+                if((numpag-1)<=this.getPaginas().size()&&(numpag-1)>=0){
+                    this.getPaginas().get(numpag-1).mostrarDatos(this,juego);
+                }
+                else{
+                    System.out.println("Pagina invalida o inexistente");
+                }
             }
         }else{
             for(int i=0;i<paginas.size();i++){

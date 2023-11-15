@@ -19,9 +19,8 @@ public abstract class FactoryPagina {
                     String entrada = entrada2.nextLine();
                     _numero = Integer.parseInt(entrada);
                 } catch (NumberFormatException e) {
-                    System.out.println("Digite una opcion valida");
                 }if(_numero<0){
-                    System.out.println("No pueden haber paginas negativas");
+                    System.out.println("Digite una opcion valida");
                 }
             } while(_numero<0);
             return new ConcretePaginaFinal().creaPagina(_descripcion, _numero);
@@ -36,9 +35,8 @@ public abstract class FactoryPagina {
                     String entrada = entrada2.nextLine();
                     _numero = Integer.parseInt(entrada);
                 } catch (NumberFormatException e) {
-                    System.out.println("Digite una opcion valida");
                 }if(_numero<0){
-                    System.out.println("No pueden haber paginas negativas");
+                    System.out.println("Digite una opcion valida");
                 }
             } while(_numero<0);
             return new ConcretePaginaNodo().creaPagina(_descripcion, _numero);
@@ -53,9 +51,8 @@ public abstract class FactoryPagina {
                     String entrada = entrada2.nextLine();
                     _numero = Integer.parseInt(entrada);
                 } catch (NumberFormatException e) {
-                    System.out.println("Digite una opcion valida");
                 }if(_numero<0){
-                    System.out.println("No pueden haber paginas negativas");
+                    System.out.println("Digite una opcion valida");
                 }
             } while(_numero<0);
             return new ConcretePaginaInicio().creaPagina(_descripcion, _numero);

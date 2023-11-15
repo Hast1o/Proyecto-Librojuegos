@@ -10,7 +10,7 @@ public class LibroJuegos implements SujetoObservable {
     private Persona jugadorActual = null;
 
     public LibroJuegos() {
-
+        this.getLibros().add(new EjemplosLibros().getL1());
     }
 
     public static LibroJuegos getInstancia() {
@@ -81,33 +81,41 @@ public class LibroJuegos implements SujetoObservable {
     public void jugar() {
         Scanner entrada6 = new Scanner(System.in);
         int opcion = 0;
-        for (int i = 0; i < this.getLibros().size(); i++) {
-            System.out.println("Libro número " + (i + 1));
-            this.getLibros().get(i).mostrarDatos();
-            System.out.println("------------------------------------------------------------");
-        }
-        do {
-            try {
-                System.out.println("Cual libro desea leer:");
-                String entrada = entrada6.nextLine();
-                opcion = Integer.parseInt(entrada);
-            } catch (NumberFormatException e) {
-                System.out.println("Opcion invalida");
-            }
-            if ((opcion) <= 0 || (opcion) > this.getLibros().size()) {
-                System.out.println("Opcion invalida");
-            }
-        } while ((opcion) <= 0 || (opcion) > this.getLibros().size());
         if (this.getJugadorActual() == null) {
             System.out.println("No hay ningun jugador en linea");
         } else {
-            this.getJugadorActual().getLibros().get((opcion - 1)).setEstado("Sin revisar");
-            if (this.getLibros().get(opcion - 1).getPaginas().size() == 0) {
-                System.out.println("El libro no tiene paginas");
+            if (this.getLibros().size() > 0) {
+                do {
+                    try {
+                        for (int i = 0; i < this.getLibros().size(); i++) {
+                            System.out.println("Libro " + (i + 1));
+                            System.out.println("Titulo: " + this.getLibros().get(i).getTitulo());
+                            System.out.println("Sinopsis: " + this.getLibros().get(i).getSinopsis());
+                            System.out.println("Autor: " + this.getLibros().get(i).getAutor());
+                            System.out.println("Numero de paginas: " + this.getLibros().get(i).getPaginas().size());
+                            System.out.println("---------------------------------------------------");
+                        }
+                        System.out.println("Cual libro desea leer:");
+                        String entrada = entrada6.nextLine();
+                        opcion = Integer.parseInt(entrada);
+                    } catch (NumberFormatException e) {
+                    }
+                    if ((opcion) <= 0 || (opcion) > this.getLibros().size()) {
+                        System.out.println("Opcion invalida");
+                    }
+                } while ((opcion) <= 0 || (opcion) > this.getLibros().size());
+
+                this.getJugadorActual().getLibros().get((opcion - 1)).setEstado("Sin revisar");
+                if (this.getLibros().get(opcion - 1).getPaginas().size() == 0) {
+                    System.out.println("El libro no tiene paginas");
+                } else {
+                    this.getJugadorActual().getLibros().get((opcion - 1)).pedirNombre();
+                    this.getJugadorActual().getLibros().get((opcion - 1)).siguientePagina(1, this);
+                }
             } else {
-                this.getJugadorActual().getLibros().get((opcion - 1)).pedirNombre();
-                this.getJugadorActual().getLibros().get((opcion - 1)).siguientePagina(0, this);
+                System.out.println("No hay ningun libro creado");
             }
+
         }
     }
 
@@ -121,14 +129,13 @@ public class LibroJuegos implements SujetoObservable {
             System.out.println("Ingrese la descripción del libro:");
             String descripcion = entrada7.nextLine();
             Libro libro = new Libro(this.getJugadorActual().getNombre(), nombre, descripcion);
-            System.out.println("Desea agregar una página al libro:");
+            System.out.println("Desea agregar una página al libro (si/no)");
             String opcion = entrada7.nextLine();
             while (opcion.equalsIgnoreCase("si")) {
                 libro.agregaPagina();
-                System.out.println("Desea agregar otra página al libro:");
+                System.out.println("Desea agregar otra página al libro (si/no)");
                 opcion = entrada7.nextLine();
             }
-            this.getLibros().add(libro);
             System.out.println("Libro creado exitosamente");
             for (int i = 0; i < this.getJugadores().size(); i++) {
                 this.getJugadores().get(i).getLibros().add(libro);
@@ -161,7 +168,6 @@ public class LibroJuegos implements SujetoObservable {
                         String entrada = entrada8.nextLine();
                         opcionLibro = Integer.parseInt(entrada);
                     } catch (NumberFormatException e) {
-                        System.out.println("Opcion invalida");
                     }
                     if ((opcionLibro) <= 0 || (opcionLibro) > this.getLibros().size()) {
                         System.out.println("Opcion invalida");
@@ -182,7 +188,6 @@ public class LibroJuegos implements SujetoObservable {
                         String entrada = entrada8.nextLine();
                         accion = Integer.parseInt(entrada);
                     } catch (NumberFormatException e) {
-                        System.out.println("Opcion invalida");
                     }
                     if (accion < 1 || accion > 5) {
                         System.out.println("Opcion invalida");
@@ -220,7 +225,6 @@ public class LibroJuegos implements SujetoObservable {
                             String entrada = entrada11.nextLine();
                             accionPagina = Integer.parseInt(entrada);
                         } catch (NumberFormatException e) {
-                            System.out.println("Opcion invalida");
                         }
                         if (accionPagina < 1 || accionPagina > 2) {
                             System.out.println("Opcion invalida");
@@ -247,7 +251,6 @@ public class LibroJuegos implements SujetoObservable {
                                 String entrada = entrada12.nextLine();
                                 opcionPagina = Integer.parseInt(entrada);
                             } catch (NumberFormatException e) {
-                                System.out.println("Opcion invalida");
                             }
                             if (opcionPagina <= 0
                                     || opcionPagina > this.getLibros().get((opcionLibro - 1)).getPaginas().size()) {
@@ -256,15 +259,14 @@ public class LibroJuegos implements SujetoObservable {
                         } while (opcionPagina <= 0
                                 || opcionPagina > this.getLibros().get((opcionLibro - 1)).getPaginas().size());
                         this.getLibros().get((opcionLibro - 1)).remuevePagina(opcionPagina - 1);
-                        this.notificar((opcionLibro - 1), accion, "", null, opcionPagina, accionPagina);
+                        this.notificar((opcionLibro - 1), accion, "", null, opcionPagina - 1, accionPagina);
                         System.out.println("Página eliminada");
                     }
-                    if (accion == 5) {
-                        this.getLibros().remove((opcionLibro - 1));
-                        for (int i = 0; i < this.getJugadores().size(); i++) {
-                            this.getJugadores().get(i).getLibros().remove((opcionLibro - 1));
-                            System.out.println("Libro eliminado con exito");
-                        }
+                }
+                if (accion == 5) {
+                    for (int i = 0; i < this.getJugadores().size(); i++) {
+                        this.getJugadores().get(i).getLibros().remove((opcionLibro - 1));
+                        System.out.println("Libro eliminado con exito");
                     }
                 }
             }
@@ -288,7 +290,6 @@ public class LibroJuegos implements SujetoObservable {
                 String entrada = entrada13.nextLine();
                 opcion = Integer.parseInt(entrada);
             } catch (NumberFormatException e) {
-                System.out.println("Opcion invalida");
             }
             if (opcion < 1 || opcion > 7) {
                 System.out.println("Opcion invalida");

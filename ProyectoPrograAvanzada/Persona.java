@@ -53,10 +53,6 @@ public class Persona implements Observador{
         juego.jugar();
     }
 
-    public void configurarUsuario(){
-
-    }
-
     @Override
     public void actualizar(int numLibro,int opcion,String cambio){
         if(opcion==1){
