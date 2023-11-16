@@ -113,17 +113,10 @@ public abstract class Pagina {
         }
         if(this.getTipo().equalsIgnoreCase("Inicio")){
             do {
-                try {
-                    System.out.println("Creando Opcion que devuelve al inicio");
-                    System.out.println("Ingrese una descripcion");
-                    StringBuilder narrativa = new StringBuilder(entrada14.nextLine());
-                    System.out.println("Ingrese la direccion");
-                    String entrada = entrada14.nextLine();
-                    nuevaDireccion = Integer.parseInt(entrada);
-                    this.getOpciones().add(new Opcion(narrativa,nuevaDireccion,"Sin usar"));
-                } catch (NumberFormatException e) {
-                    System.out.println("Nueva direccion no valida");
-                }
+                System.out.println("Creando Opcion que devuelve al inicio");
+                System.out.println("Ingrese una descripcion");
+                StringBuilder narrativa = new StringBuilder(entrada14.nextLine());
+                this.getOpciones().add(new Opcion(narrativa,1,"Sin usar"));
             } while (this.getOpciones().size()<1);   
         }
     }
@@ -138,7 +131,6 @@ public abstract class Pagina {
         }
         if(l.getPaginas().get(o.getNuevaDireccion()-1).tipo=="Final"){
             l.setEstado("Terminado");
-            System.out.println(l.getPaginas().get(o.getNuevaDireccion()-1).getDescripcion());
             System.out.println("Volviendo al menú principal.......");
             l.siguientePagina(o.getNuevaDireccion(),juego);
         }

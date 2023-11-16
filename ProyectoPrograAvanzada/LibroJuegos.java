@@ -46,9 +46,9 @@ public class LibroJuegos implements SujetoObservable {
 
     public void registrarse() {
         Scanner entrada4 = new Scanner(System.in);
-        System.out.print("Nombre de usuario:");
+        System.out.println("Nombre de usuario:");
         String nombre = entrada4.nextLine();
-        System.out.print("Contraseña:");
+        System.out.println("Contraseña:");
         String contraseña = entrada4.nextLine();
         Persona p = new Persona(nombre, contraseña, this.getLibros());
         this.getJugadores().add(p);
@@ -69,12 +69,14 @@ public class LibroJuegos implements SujetoObservable {
                     if (this.getJugadores().get(i).getPassword().equals(contraseña)) {
                         this.setJugadorActual(this.getJugadores().get(i));
                         System.out.println("Bienvenido " + this.getJugadores().get(i).getNombre());
-                    } else {
-                        System.out.println("Contraseña incorrecta o usuario incorrecto");
+                    }else{
+                        System.out.println("Usuario o contraseña incorrectos");
                     }
+                }else{
+                    System.out.println("Usuario o contraseña incorrectos");
                 }
             }
-
+            
         }
     }
 
@@ -86,6 +88,9 @@ public class LibroJuegos implements SujetoObservable {
         } else {
             if (this.getLibros().size() > 0) {
                 do {
+                    System.out.println(
+                            "Para comenzar a jugar debes escoger un libro de entre todas las opciones validas\nluego deberas escoger un nombre, el cual será tu identificador a lo largo de esta aventura\ncada opcion indica la pagina a la cual te llevará por ende solo debes escoger una [1-2-3]\nlas paginas de inicio solo tienen una opcion, volver al principio, las de tipo nodo cuenta con 3 posibles opciones y las de tipo final terminan el cuento.");
+                            System.out.println("IMPORTANTE las opciones que hayas utilizado no estarán disponibles nuevamente en caso de que vuelvas al inicio.\n");
                     try {
                         for (int i = 0; i < this.getLibros().size(); i++) {
                             System.out.println("Libro " + (i + 1));
@@ -93,7 +98,7 @@ public class LibroJuegos implements SujetoObservable {
                             System.out.println("Sinopsis: " + this.getLibros().get(i).getSinopsis());
                             System.out.println("Autor: " + this.getLibros().get(i).getAutor());
                             System.out.println("Numero de paginas: " + this.getLibros().get(i).getPaginas().size());
-                            System.out.println("---------------------------------------------------");
+                            System.out.println("Estado: "+this.getLibros().get(i).getEstado());
                         }
                         System.out.println("Cual libro desea leer:");
                         String entrada = entrada6.nextLine();
@@ -123,6 +128,19 @@ public class LibroJuegos implements SujetoObservable {
         if (this.getJugadorActual() == null) {
             System.out.println("No hay ningun jugador en linea");
         } else {
+            System.out.println(
+                    "Para crear un libro debes hacerlo con un nombre, una descripcion y un numero de paginas a tu criterio [0...N], el autor por defecto será quien cree el escrito");
+            System.out.println(
+                    "se te preguntará cada vez que quieras agregar una pagina si esta sera de tipo\nnodo (con 3 opciones)\ninicio (volver al principio)\nfinal (concluyen la historia)");
+            System.out.println(
+                    "las opciones que crees te pediran siempre que ingreses una direccion la cual es clave para avanzar en la historia\nlas opciones que te lleven al principio llevaran siempre el numero 1 y las de final terminaran la historia llevandote a la pagina 0 o al menu principal");
+            System.out.println(
+                    "si te equivocas no te preocupes puedes editar el libro en cualquier momento desde el menu");
+            System.out.println(
+                    "IMPORTANTE si deseas que el nombre del jugador se refleje en tu historia debes escribir en la narrativa de la pagina o de la opcion la palabra NOMBREJUGADOR (en mayúsculas)");
+            System.out.println("Ejemplo: NOMBREJUGADOR es atacado.");
+            System.out.println("de esta forma cuando alguien ingrese un nombre se reflejará de la siguiente forma");
+            System.out.println("Nicolas es atacado\n-------------------------------------------------------");
             Scanner entrada7 = new Scanner(System.in);
             System.out.println("Ingrese el nombre del libro:");
             String nombre = entrada7.nextLine();
@@ -284,9 +302,10 @@ public class LibroJuegos implements SujetoObservable {
         int opcion = 0;
         do {
             try {
+                System.out.println("----------------------------------------------------------------------------------------------------");
                 System.out.println("Bienvenido a libro juegos, que desea hacer");
-                System.out.println(
-                        "1) Registrarse\n2) Iniciar sesion\n3) Jugar\n4) Agregar libro\n5) Editar libro\n6) Cerrar sesion\n7) Salir");
+                System.out.println(  "1) Registrarse\n2) Iniciar sesion\n3) Jugar\n4) Agregar libro\n5) Editar libro\n6) Cerrar sesion\n7) Salir");
+                System.out.println("Digite una opcion");
                 String entrada = entrada13.nextLine();
                 opcion = Integer.parseInt(entrada);
             } catch (NumberFormatException e) {
@@ -305,7 +324,6 @@ public class LibroJuegos implements SujetoObservable {
         }
         if (opcion == 3) {
             this.jugar();
-            this.menuOpciones();
         }
         if (opcion == 4) {
             this.agregarLibro();

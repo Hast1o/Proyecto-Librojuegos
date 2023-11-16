@@ -10,6 +10,7 @@ public class Libro {
     private ArrayList<Pagina> paginas = new ArrayList<Pagina>();
     private String estado;
     private String nombreJugador;
+    private String imagen;
 
     Libro(){
         this.setAutor("autor");
@@ -76,8 +77,9 @@ public class Libro {
 
     public void pedirNombre(){
         Scanner entrada3 = new Scanner(System.in);
-        System.out.println("Ingrese su nombre para comenzar su aventura:");
+        System.out.println("Ingrese su nombre para comenzar su aventura");
         this.setNombreJugador(entrada3.nextLine());
+        System.out.println("\n------------------------------------------");
         for(int i=0;i<paginas.size();i++){
             this.paginas.get(i).cambiaNombre(this.getNombreJugador(),"NOMBREJUGADOR");
         }
@@ -104,9 +106,9 @@ public class Libro {
                     this.getPaginas().get(i).reestableceOpciones();
                     this.getPaginas().get(i).cambiaNombre("NOMBREJUGADOR",this.getNombreJugador());
                 }
-                juego.menuOpciones();
             }else{
                 if((numpag-1)<=this.getPaginas().size()&&(numpag-1)>=0){
+                    System.out.println("------------------------------------------------------------------------");
                     this.getPaginas().get(numpag-1).mostrarDatos(this,juego);
                 }
                 else{
@@ -118,8 +120,9 @@ public class Libro {
                 this.getPaginas().get(i).reestableceOpciones();
                 this.getPaginas().get(i).cambiaNombre("NOMBREJUGADOR",this.getNombreJugador());
             }
-            juego.menuOpciones();
+            
         }
+        juego.menuOpciones();
     }  
 
 
